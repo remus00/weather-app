@@ -2,6 +2,7 @@ import { useTheme } from '@/context/theme-provider';
 import { cn } from '@/lib/utils';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { CitySearch } from './city-search';
 
 export const Header = () => {
     const { theme, setTheme } = useTheme();
@@ -18,8 +19,8 @@ export const Header = () => {
                     />
                 </Link>
 
-                <div className="">
-                    {/* Search */}
+                <div className="flex gap-4">
+                    <CitySearch />
                     <div
                         className={cn(
                             'flex cursor-pointer items-center transition-transform duration-500',
