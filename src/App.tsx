@@ -1,11 +1,15 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Button } from './components/ui/button';
+import { Layout } from './components/layout';
+import { ThemeProvider } from './context/theme-provider';
 
 function App() {
     return (
-        <div className="flex h-screen w-full items-center justify-center">
-            <Button>Hello world</Button>
-        </div>
+        <BrowserRouter>
+            <ThemeProvider defaultTheme="dark">
+                <Layout>Hello</Layout>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 }
 
