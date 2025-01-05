@@ -1,3 +1,4 @@
+import { AddToFavouriteButton } from '@/components/add-to-favourite-button';
 import { CurrentWeather } from '@/components/current-weather';
 import { HourlyTemperature } from '@/components/hourly-temperature';
 import { LoadingSkeleton } from '@/components/loading-skeleton';
@@ -39,7 +40,9 @@ export const CityPage = () => {
                 <h1 className="text-3xl font-semibold tracking-tight">
                     {params.cityName}, {weatherQuery.data.sys.country}
                 </h1>
-                <div className=""></div>
+                <AddToFavouriteButton
+                    data={{ ...weatherQuery.data, name: params.cityName }}
+                />
             </div>
 
             <div className="grid gap-6">
