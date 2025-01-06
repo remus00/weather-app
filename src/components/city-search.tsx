@@ -7,11 +7,12 @@ import {
     CommandList,
     CommandSeparator,
 } from '@/components/ui/command';
+import { useFavourite } from '@/hooks/use-favourite';
 import { useSearchHistory } from '@/hooks/use-search-history';
 import { useLocationSearch } from '@/hooks/use-weather';
 import {} from 'cmdk';
 import { format } from 'date-fns';
-import { ClockIcon, Loader2, SearchIcon, XCircle } from 'lucide-react';
+import { ClockIcon, Loader2, SearchIcon, StarIcon, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
@@ -23,6 +24,7 @@ export const CitySearch = () => {
 
     const { data: locations, isLoading } = useLocationSearch(query);
     const { history, addToHistory, clearHistory } = useSearchHistory();
+    const { favourites } = useFavourite();
 
     const handleSelect = (city: string) => {
         const [lat, lon, name, country] = city.split('|');
@@ -61,9 +63,30 @@ export const CitySearch = () => {
                         <CommandEmpty>No cities found.</CommandEmpty>
                     )}
 
-                    {/* <CommandGroup heading="Favourites">
-                        <CommandItem>Calendar</CommandItem>
-                    </CommandGroup> */}
+                    {favourites.length > 0 && (
+                        <CommandGroup heading="Favourites">
+                            {favourites.map((location, idx) => (
+                                <CommandItem
+                                    key={idx}
+                                    value={`${location.lat}|${location.lon}|${location.name}|${location.country}`}
+                                    onSelect={handleSelect}
+                                    className="flex cursor-pointer items-center gap-1"
+                                >
+                                    <StarIcon className="mr-2 size-4 text-yellow-500" />
+                                    <span>{location.name}</span>
+                                    {location.state && (
+                                        <span className="text-sm text-muted-foreground">
+                                            - {location.state}
+                                        </span>
+                                    )}
+
+                                    <span className="text-sm text-muted-foreground">
+                                        - {location.country}
+                                    </span>
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    )}
 
                     {history.length > 0 && (
                         <>
